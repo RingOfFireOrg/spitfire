@@ -32,12 +32,11 @@ public class Spitfire2014 extends SimpleRobot {
     Joystick rightStick = new Joystick(2);
     Joystick controlStick = new Joystick(3);
     
-    JoystickButton retractButton = new JoystickButton(controlStick, 3);
-    JoystickButton expandButton = new JoystickButton(controlStick, 2);
+    JoystickButton toggleBridge = new JoystickButton(controlStick, 2);
     JoystickButton trigger = new JoystickButton(controlStick, 1);
     
-    Compressor compressor = new Compressor(1,1);
-    MySolenoid bridge = new MySolenoid(3,3,4);
+    Compressor compressor = new Compressor(1,1); //(int pressureSwitchChannel, int compressorRelayChannel
+    MySolenoid bridge = new MySolenoid(1,3,4);
     
     Victor shooter = new Victor(5);
     
@@ -53,10 +52,7 @@ public class Spitfire2014 extends SimpleRobot {
     public void operatorControl() {
         boolean pressureSwitchVal = true, pressureSwitchPreval = true;
         compressor.start();
-        
-        boolean retractedState = true, extendedState = false, retractButtonVal, expandButtonVal;
-        boolean pistonPrevalueR = true, pistonPrevalueE = false;
-        
+        boolean toggleBridgePreval = false,toggleBridgeVal=false;
         while(isOperatorControl() && isEnabled()) {
             shooter.set((controlStick.getThrottle()-1)/2);
             
@@ -78,42 +74,22 @@ public class Spitfire2014 extends SimpleRobot {
             
             pressureSwitchPreval = pressureSwitchVal;
             
-            //Solenoid Actuating
-            retractButtonVal = retractButton.get();
-            expandButtonVal = expandButton.get();
-            
-            //determines the desired state of the system based on buttons
-            if (retractButtonVal && !expandButtonVal) {
-                retractedState = true;
-                extendedState = false;
-                SmartDashboard.putString("Kicker:", " Retracted");
-            } else if (!retractButtonVal && expandButtonVal) {
-                retractedState = false;
-                extendedState = true;
-                SmartDashboard.putString("Kicker:", " Extended");
-            } else if (retractButtonVal && expandButtonVal) {
-                SmartDashboard.putString("Kicker:", " Both bottons pressed");
-            }
-            
-            //Extends and Retracts the piston only when not previously extended or retracted
-            if (retractedState && !pistonPrevalueR) {
-                bridge.retract();
-            } else if (extendedState && !pistonPrevalueE) {
-                bridge.extend();
-            } else {
-                //nothing
-            }
-            
-            pistonPrevalueE = extendedState;
-            pistonPrevalueR = retractedState;
-        }
-    }
-    
+           //New solenoid code 
+           toggleBridgeVal=toggleBridge.get();
+           if(toggleBridgeVal && !toggleBridgePreval){
+               if(bridge.get()){
+                   bridge.retract();
+               }else{
+                   bridge.extend();
+                           }
+               }
+           }
+           toggleBridgePreval=toggleBridgeVal;
     /**
      * This function is called once each time the robot enters test mode.
-     */
+     
     public void test() {
-    
+    */
     }
 }
 
