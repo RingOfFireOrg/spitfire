@@ -26,13 +26,13 @@ public class MainCompressor {
     }
     
     public void update(){
-            pressureSwitchVal = compressor.getPressureSwitchValue();
+            pressureSwitchVal = thisCompressor.getPressureSwitchValue();
             
             if(pressureSwitchVal && !pressureSwitchPreval) {                                          //
-                compressor.stop();
+                thisCompressor.stop();
                 
             } else if (!pressureSwitchVal && pressureSwitchPreval) {            
-                compressor.start();
+                thisCompressor.start();
             }
             
             pressureSwitchPreval = pressureSwitchVal;

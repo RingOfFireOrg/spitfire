@@ -50,8 +50,10 @@ public class Spitfire2014 extends SimpleRobot {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
+        mainCompressor.begin();
         boolean toggleBridgePreval = false,toggleBridgeVal=false;
         while(isOperatorControl() && isEnabled()) {
+            mainCompressor.update();
             shooter.set((controlStick.getThrottle()-1)/2);
             
             if(trigger.get()) {
@@ -59,10 +61,6 @@ public class Spitfire2014 extends SimpleRobot {
             } else {
                 banana.set(0.35);
             }
-            
-            //Compressor
-
-            
            //New solenoid code 
            toggleBridgeVal=toggleBridge.get();
            if(toggleBridgeVal && !toggleBridgePreval){
