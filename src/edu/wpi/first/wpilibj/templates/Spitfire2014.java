@@ -35,7 +35,7 @@ public class Spitfire2014 extends SimpleRobot {
     JoystickButton toggleBridge = new JoystickButton(controlStick, 2);
     JoystickButton trigger = new JoystickButton(controlStick, 1);
     
-    Compressor compressor = new Compressor(1,1); //(int pressureSwitchChannel, int compressorRelayChannel
+    MainCompressor mainCompressor = new MainCompressor(1,1);
     MySolenoid bridge = new MySolenoid(1,3,4);
     
     Victor shooter = new Victor(5);
@@ -50,8 +50,6 @@ public class Spitfire2014 extends SimpleRobot {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
-        boolean pressureSwitchVal = true, pressureSwitchPreval = true;
-        compressor.start();
         boolean toggleBridgePreval = false,toggleBridgeVal=false;
         while(isOperatorControl() && isEnabled()) {
             shooter.set((controlStick.getThrottle()-1)/2);
@@ -63,16 +61,7 @@ public class Spitfire2014 extends SimpleRobot {
             }
             
             //Compressor
-            pressureSwitchVal = compressor.getPressureSwitchValue();
-            
-            if(pressureSwitchVal && !pressureSwitchPreval) {                                          //
-                compressor.stop();
-                
-            } else if (!pressureSwitchVal && pressureSwitchPreval) {            
-                compressor.start();
-            }
-            
-            pressureSwitchPreval = pressureSwitchVal;
+
             
            //New solenoid code 
            toggleBridgeVal=toggleBridge.get();
