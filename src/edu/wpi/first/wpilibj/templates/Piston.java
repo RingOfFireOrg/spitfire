@@ -5,25 +5,23 @@ import edu.wpi.first.wpilibj.Solenoid;
  *
  * @author Sam
  */
-public class MySolenoid {
+public class Piston{
     private Solenoid foo;
     private Solenoid bar;
 
     private boolean doublek = false;
-
     /*
      * For a one-solenoid system
      */
-    public MySolenoid(int port) {
+    public Piston(int port) {
         foo = new Solenoid(8, port);
         doublek = false;
         System.out.println("MySolenoid enabled on port " + port);
     }
-
     /*
      * For a double solenoid system
      */
-    public MySolenoid(int port1, int port2) {
+    public Piston(int port1, int port2) {
         doublek = true;
         foo = new Solenoid(8, port1);
         bar = new Solenoid(8, port2);
@@ -33,7 +31,7 @@ public class MySolenoid {
     /*
      * For a double solenoid system, custom slot
      */
-    public MySolenoid(int slot, int port1, int port2) {
+    public Piston(int slot, int port1, int port2) {
         doublek = true;
         foo = new Solenoid(slot, port1);
         bar = new Solenoid(slot, port2);
@@ -43,7 +41,7 @@ public class MySolenoid {
     /*
      * Extends the solenoid
      */
-    public void extend() {
+    public void Extend() {
         foo.set(true);
 
         if(doublek) {
@@ -54,7 +52,7 @@ public class MySolenoid {
     /*
      * Retracts the solenoid
      */
-    public void retract() {
+    public void Retract() {
         foo.set(false);
 
         if(doublek) {
