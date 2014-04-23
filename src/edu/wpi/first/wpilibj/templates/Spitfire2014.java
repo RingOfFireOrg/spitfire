@@ -59,7 +59,7 @@ public class Spitfire2014 extends SimpleRobot {
      */
     public void operatorControl() {
         mainCompressor.begin();
-        boolean toggleBridgePreval = false,toggleBridgeVal=false;
+        boolean toggleBridgePreval = false,toggleBridgeVal=false,bridgeState=false;
         while(isOperatorControl() && isEnabled()) {
             mainCompressor.update();
             shooterControl.start((controlStick.getThrottle()-1)/2);
@@ -79,17 +79,17 @@ public class Spitfire2014 extends SimpleRobot {
                 banana.set(0.35);
             }
             driveControl.tankDrive(leftStick.getY(), rightStick.getY());
-           //New solenoid code 
            toggleBridgeVal=toggleBridge.get();
            if(toggleBridgeVal && !toggleBridgePreval){
-               if(bridge.get()){
+               bridgeState=!bridgeState
+               if(bridgeState){
                    bridge.Retract();
                }else{
                    bridge.Extend();
                }
            }
-        }
            toggleBridgePreval=toggleBridgeVal;
+        }
     /**
      * This function is called once each time the robot enters test mode.
      
