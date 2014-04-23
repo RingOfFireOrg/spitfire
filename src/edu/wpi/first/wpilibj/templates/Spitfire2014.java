@@ -81,7 +81,7 @@ public class Spitfire2014 extends SimpleRobot {
             driveControl.tankDrive(leftStick.getY(), rightStick.getY());
            toggleBridgeVal=toggleBridge.get();
            if(toggleBridgeVal && !toggleBridgePreval){
-               bridgeState=!bridgeState
+               bridgeState=!bridgeState;
                if(bridgeState){
                    bridge.Retract();
                }else{
