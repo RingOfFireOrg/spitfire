@@ -47,8 +47,8 @@ public class Spitfire2014 extends SimpleRobot {
     Servo banana = new Servo(10);
     RunnableVictor shooter = new RunnableVictor(5);
     Control shooterControl = new Control(shooter);
-    Relay collector = new Relay(2);
-    Relay conveyor = new Relay(8);
+    Spikey collector = new Spikey(2);
+    Spikey conveyor = new Spikey(8);
     Control driveControl = new Control(robotDrive);
     public void autonomous() {
         
@@ -63,16 +63,8 @@ public class Spitfire2014 extends SimpleRobot {
         while(isOperatorControl() && isEnabled()) {
             mainCompressor.update();
             shooterControl.start((controlStick.getThrottle()-1)/2);
-            if(conveyorA.get()){
-                conveyor.set(Relay.Value.kForward);
-            }else{
-                conveyor.set(Relay.Value.kOff);
-            }
-            if(collectorA.get()){
-                collector.set(Relay.Value.kForward);
-            }else{
-                collector.set(Relay.Value.kOff);
-            }
+            conveyor.set(conveyorA.get(), conveyorB.get());
+            collector.set(collectorA.get(),collectorB.get());
             if(trigger.get()) {
                 banana.set(0.1);
             } else {
