@@ -14,19 +14,23 @@ import edu.wpi.first.wpilibj.Relay;
  */
 public class Spikey {
     Relay Spike;
-    boolean buttonPreVal=false;
+    boolean buttonPreVal=false, state=false;
     public Spikey(int pwm){
         Spike = new Relay(pwm);
     }
     public void set(boolean buttonA, boolean buttonB){
         if(buttonA && !buttonPreVal){
+            state=!state;
+        }
+        if(state){
             if(buttonB){
                 Spike.set(Relay.Value.kReverse);
             }else{
                 Spike.set(Relay.Value.kForward);
             }
+        }else{
             Spike.set(Relay.Value.kOff);
         }
-        buttonPreVal=buttonA;
+    buttonPreVal=buttonA;
     }
 }
